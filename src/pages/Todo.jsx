@@ -47,7 +47,7 @@ export default function Todo() {
         let isMounted = true;
         const load = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/todos');
+                const res = await axios.get(`${API_BASE_URL}/api/todos`);
                 if (isMounted) setTodos(res.data);
             } catch (err) {
                 console.error(err);
@@ -62,7 +62,7 @@ export default function Todo() {
         if (!newTask.trim()) return;
 
         try {
-            await axios.post('http://localhost:3000/api/todos', {
+            await axios.post(`${API_BASE_URL}/api/todos`, {
                 task: newTask,
                 details: newDetails,
                 format: newFormat,
@@ -85,7 +85,7 @@ export default function Todo() {
 
     const toggleTodo = async (id, currentStatus) => {
         try {
-            await axios.patch(`http://localhost:3000/api/todos/${id}`, { is_completed: !currentStatus });
+            await axios.patch(`${API_BASE_URL}/api/todos/${id}`, { is_completed: !currentStatus });
             triggerRefresh();
         } catch (err) {
             console.error(err);
@@ -96,7 +96,7 @@ export default function Todo() {
         e.stopPropagation();
         if (!confirm('Are you sure you want to delete this task?')) return;
         try {
-            await axios.delete(`http://localhost:3000/api/todos/${id}`);
+            await axios.delete(`${API_BASE_URL}/api/todos/${id}`);
             triggerRefresh();
         } catch (err) {
             console.error(err);
@@ -109,7 +109,7 @@ export default function Todo() {
         if (updatedTask === null || updatedTask === todo.task) return;
 
         try {
-            await axios.patch(`http://localhost:3000/api/todos/${todo.id}`, { task: updatedTask });
+            await axios.patch(`${API_BASE_URL}/api/todos/${todo.id}`, { task: updatedTask });
             triggerRefresh();
         } catch (err) {
             console.error(err);

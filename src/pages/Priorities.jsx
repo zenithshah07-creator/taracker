@@ -28,7 +28,7 @@ export default function Priorities({ onNavigate }) {
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/todos');
+                const res = await axios.get(`${API_BASE_URL}/api/todos`);
                 setTodos(res.data);
                 setLoading(false);
             } catch (err) {
@@ -41,7 +41,7 @@ export default function Priorities({ onNavigate }) {
 
     const toggleTodo = async (id, currentStatus) => {
         try {
-            await axios.patch(`http://localhost:3000/api/todos/${id}`, { is_completed: !currentStatus });
+            await axios.patch(`${API_BASE_URL}/api/todos/${id}`, { is_completed: !currentStatus });
             triggerRefresh();
         } catch (err) {
             console.error(err);
@@ -77,7 +77,7 @@ export default function Priorities({ onNavigate }) {
 
     const addMissionFromPreset = async (preset) => {
         try {
-            await axios.post('http://localhost:3000/api/todos', {
+            await axios.post(`${API_BASE_URL}/api/todos`, {
                 task: preset.title,
                 details: "Initialized from priority preset.",
                 format: preset.type,

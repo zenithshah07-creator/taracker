@@ -24,9 +24,9 @@ export default function Dashboard({ onNavigate }) {
         setLoading(true);
         try {
             const [summaryRes, logsRes, todosRes] = await Promise.all([
-                axios.get('http://localhost:3000/api/summary'),
-                axios.get('http://localhost:3000/api/logs'),
-                axios.get('http://localhost:3000/api/todos')
+                axios.get(`${API_BASE_URL}/api/summary`),
+                axios.get(`${API_BASE_URL}/api/logs`),
+                axios.get(`${API_BASE_URL}/api/todos`)
             ]);
 
             setSummary(summaryRes.data);

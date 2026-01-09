@@ -125,7 +125,7 @@ export default function Roadmap() {
 
     const fetchTodos = useCallback(async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/todos');
+            const res = await axios.get(`${API_BASE_URL}/api/todos`);
             setTodos(res.data);
         } catch (err) {
             console.error(err);
@@ -145,7 +145,7 @@ export default function Roadmap() {
         formData.append('pdf', file);
 
         try {
-            const res = await axios.post('http://localhost:3000/api/upload-roadmap', formData, {
+            const res = await axios.post(`${API_BASE_URL}/api/upload-roadmap`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
@@ -170,7 +170,7 @@ export default function Roadmap() {
             // Flatten the nested structure: Combine all sections from all PDFs
             const allSections = previewTasks.flatMap(pdf => pdf.sections);
 
-            await axios.post('http://localhost:3000/api/todos/batch', { tasks: allSections });
+            await axios.post(`${API_BASE_URL}/api/todos/batch`, { tasks: allSections });
             setPreviewTasks([]); // Clear preview
             fetchTodos(); // Refresh main list
             alert('All tasks from all PDFs added to your Todo list!');
@@ -182,7 +182,7 @@ export default function Roadmap() {
 
     const toggleTodo = async (id, currentStatus) => {
         try {
-            await axios.patch(`http://localhost:3000/api/todos/${id}`, { is_completed: !currentStatus });
+            await axios.patch(`${API_BASE_URL}/api/todos/${id}`, { is_completed: !currentStatus });
             fetchTodos();
         } catch (err) {
             console.error(err);
@@ -192,7 +192,7 @@ export default function Roadmap() {
     const deleteTodo = async (e, id) => {
         e.stopPropagation();
         try {
-            await axios.delete(`http://localhost:3000/api/todos/${id}`);
+            await axios.delete(`${API_BASE_URL}/api/todos/${id}`);
             fetchTodos();
         } catch (err) {
             console.error(err);
@@ -205,7 +205,7 @@ export default function Roadmap() {
         if (newTask === null || newTask === todo.task) return;
 
         try {
-            await axios.patch(`http://localhost:3000/api/todos/${todo.id}`, { task: newTask });
+            await axios.patch(`${API_BASE_URL}/api/todos/${todo.id}`, { task: newTask });
             fetchTodos();
         } catch (err) {
             console.error(err);
@@ -217,7 +217,7 @@ export default function Roadmap() {
         if (!taskName) return;
 
         try {
-            await axios.post('http://localhost:3000/api/todos', {
+            await axios.post(`${API_BASE_URL}/api/todos`, {
                 task: taskName,
                 section: sectionName,
                 is_completed: false,
@@ -236,7 +236,7 @@ export default function Roadmap() {
 
         try {
             // encoding the section name is important if it has special chars
-            await axios.put(`http://localhost:3000/api/sections/${encodeURIComponent(oldName)}`, { newName });
+            await axios.put(`${API_BASE_URL}/api/sections/${encodeURIComponent(oldName)}`, { newName });
             fetchTodos();
         } catch (err) {
             console.error(err);
@@ -248,7 +248,7 @@ export default function Roadmap() {
         if (!confirm(`Delete section "${sectionName}" and ALL its tasks?`)) return;
 
         try {
-            await axios.delete(`http://localhost:3000/api/sections/${encodeURIComponent(sectionName)}`);
+            await axios.delete(`${API_BASE_URL}/api/sections/${encodeURIComponent(sectionName)}`);
             fetchTodos();
         } catch (err) {
             console.error(err);
@@ -292,7 +292,7 @@ export default function Roadmap() {
         const sectionName = section.section || 'General';
 
         try {
-            await axios.post('http://localhost:3000/api/todos', {
+            await axios.post(`${API_BASE_URL}/api/todos`, {
                 task: taskName,
                 details: taskDetails,
                 section: sectionName,

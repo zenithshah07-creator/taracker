@@ -28,8 +28,8 @@ export default function History() {
         setLoading(true);
         try {
             const [logsRes, todosRes] = await Promise.all([
-                axios.get('http://localhost:3000/api/logs'),
-                axios.get('http://localhost:3000/api/todos')
+                axios.get(`${API_BASE_URL}/api/logs`),
+                axios.get(`${API_BASE_URL}/api/todos`)
             ]);
 
             // Process Logs

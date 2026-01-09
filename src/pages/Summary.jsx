@@ -193,10 +193,10 @@ export default function Summary() {
         const fetchData = async () => {
             try {
                 const [statsRes, logsRes, reportRes, todosRes] = await Promise.all([
-                    axios.get('http://localhost:3000/api/summary'),
-                    axios.get('http://localhost:3000/api/logs'),
-                    axios.get('http://localhost:3000/api/todos/report/today'),
-                    axios.get('http://localhost:3000/api/todos')
+                    axios.get(`${API_BASE_URL}/api/summary`),
+                    axios.get(`${API_BASE_URL}/api/logs`),
+                    axios.get(`${API_BASE_URL}/api/todos/report/today`),
+                    axios.get(`${API_BASE_URL}/api/todos`)
                 ]);
 
                 processStats(logsRes.data, todosRes.data, reportRes.data);

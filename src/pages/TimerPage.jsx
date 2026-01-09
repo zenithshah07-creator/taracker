@@ -61,7 +61,7 @@ export default function TimerPage() {
 
     const fetchTodos = async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/todos');
+            const res = await axios.get(`${API_BASE_URL}/api/todos`);
             setTodos(res.data.filter(t => !t.is_completed));
         } catch (err) {
             console.error(err);
@@ -127,7 +127,7 @@ export default function TimerPage() {
             const hours = Math.round((ms / 3600000) * 100) / 100;
             const date = new Date().toISOString().split('T')[0];
 
-            await axios.post('http://localhost:3000/api/logs', {
+            await axios.post(`${API_BASE_URL}/api/logs`, {
                 date,
                 topic,
                 hours,
