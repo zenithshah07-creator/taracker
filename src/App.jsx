@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50 font-sans">
       <Navbar active={activeTab} setActive={setActiveTab} onLogout={handleLogout} user={user} />
-      <main className="flex-1 overflow-y-auto h-screen pb-20 md:pb-0">
+      <main className="flex-1 overflow-y-auto h-screen pb-20 pt-20 md:pt-0 md:pb-0">
         <div className="max-w-5xl mx-auto">
           {renderContent()}
         </div>
