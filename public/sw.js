@@ -1,4 +1,4 @@
-const CACHE_NAME = 'goaltracker-v2-' + new Date().getTime();
+const CACHE_NAME = 'goaltracker-v3-' + new Date().getTime(); // Force update
 const urlsToCache = [
     '/',
     '/index.html',
