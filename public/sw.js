@@ -29,12 +29,31 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request)
+        fetch(event.request)
             .then(response => {
-                if (response) {
+                // Check if we received a valid response
+                if (!response || response.status !== 200 || response.type !== 'basic') {
                     return response;
                 }
-                return fetch(event.request);
+
+                // Clone the response
+                const responseToCache = response.clone();
+
+                caches.open(CACHE_NAME)
+                    .then(cache => {
+                        // Don't cache API calls or non-GET requests if you want to be safe, 
+                        // but generally for a PWA shell we mainly care about assets.
+                        // Here we just cache everything that succeeds from network for offline use.
+                        if (event.request.method === 'GET') {
+                            cache.put(event.request, responseToCache);
+                        }
+                    });
+
+                return response;
+            })
+            .catch(() => {
+                // Network failed, try cache
+                return caches.match(event.request);
             })
     );
 });
